@@ -1,2 +1,3 @@
 # pytorch-project-template
-A template for building pytorch projects and packages
+
+A template for building pytorch projects and packages.

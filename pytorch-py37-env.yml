@@ -1,0 +1,24 @@
+name: pytorch-py37
+channels: 
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.7
+  - numpy
+  - requests
+  - mkl
+  - holoviews
+  - jupyter
+  - pandas
+  - matplotlib
+  - seaborn
+  - pytorch
+  - torchvision
+  - cudatoolkit=10.0
+  - tensorboardx
+  - pip
+  - pip:
+    - opencv-python
+    - coverage
+    - codecov
+    - tqdm
