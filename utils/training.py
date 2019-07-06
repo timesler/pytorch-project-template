@@ -19,11 +19,11 @@ class BatchLogger(object):
             print('')
 
     
-class IterTimer(object):
+class BatchTimer(object):
     def __init__(self):
         self.start = time.time()
         self.end = None
-    def __call__(self):
+    def __call__(self, *args):
         self.end = time.time()
         elapsed = self.end - self.start
         self.start = self.end
@@ -34,7 +34,7 @@ class IterTimer(object):
 
 def pass_epoch(
     model, loss_fn, optimizer, loader,
-    scheduler=None, batch_metrics={'time': iter_timer()}, device='cpu',
+    scheduler=None, batch_metrics={'time': BatchTimer()}, device='cpu',
     rolling_mean=False
 ):
     """Train or evaluate over a data epoch.
