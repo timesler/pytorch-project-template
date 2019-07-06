@@ -4,19 +4,17 @@ channels:
   - conda-forge
 dependencies:
   - python=3.7
+  - pip
   - numpy
   - requests
-  - mkl
-  - holoviews
-  - jupyter
   - pandas
   - matplotlib
-  - seaborn
+  - tensorboardx
+  - jupyterlab
+  - plotly
   - pytorch
   - torchvision
   - cudatoolkit=10.0
-  - tensorboardx
-  - pip
   - pip:
     - opencv-python
     - coverage
