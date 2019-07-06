@@ -9,7 +9,9 @@ pytorch_project_template
 ├── dependencies         - Directory for dependencies and submodules
 ├── docker-compose.yml   - Docker compose file
 ├── dockerfile           - Dockerfile with all dependencies
+├── .dockerignore
 ├── environment.yml      - Conda environment file
+├── .gitignore
 ├── __init__.py          - Defines project as a module
 ├── LICENSE              - MIT license
 ├── main.py              
