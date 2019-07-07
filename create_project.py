@@ -4,7 +4,7 @@ import subprocess
 import shutil
 import glob
 
-# TODO: Add pypi and travis-ci flags
+# TODO: Add travis-ci flag
 
 DESCRIPTION = """Create pytorch project template.
 
