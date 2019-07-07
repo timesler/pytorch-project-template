@@ -6,3 +6,5 @@ RUN conda env update -n base -f /environment.yml --prune && \
     conda clean -ya
 
 RUN pip install fastapi
+
+EXPOSE 8000

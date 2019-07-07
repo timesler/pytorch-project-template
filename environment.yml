@@ -10,6 +10,7 @@ dependencies:
   - matplotlib
   - tensorboardx
   - jupyterlab
+  - python-multipart
   - pytorch
   - torchvision
   - cudatoolkit=10.0

@@ -14,7 +14,7 @@ pytorch_project_template
 ├── .gitignore
 ├── __init__.py          - Defines project as a module
 ├── LICENSE              - MIT license
-├── main.py              
+├── main.py              - Script that defines API routes (if using API)
 ├── models/              - Directory for pytorch modules
 ├── README.md
 ├── setup.py             - PyPI setup script, use for creating pip package

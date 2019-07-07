@@ -2,6 +2,7 @@ import time
 
 
 class BatchLogger(object):
+
     def __init__(self, mode, calculate_mean=False):
         self.mode = mode
         self.calculate_mean = calculate_mean
@@ -20,14 +21,33 @@ class BatchLogger(object):
 
     
 class BatchTimer(object):
-    def __init__(self):
+    """Batch timing class.
+
+    Use this class for tracking training and testing time/rate per batch or per sample.
+    
+    Keyword Arguments:
+        rate {bool} -- Whether to report a rate (batches or samples per second) or a time (seconds
+            per batch or sample). (default: {True})
+        per_sample {bool} -- Whether to report times or rates per sample or per batch.
+            (default: {True})
+    """
+
+    def __init__(self, rate=True, per_sample=True):
         self.start = time.time()
         self.end = None
-    def __call__(self, *args):
+        self.rate = rate
+        self.per_sample = per_sample
+
+    def __call__(self, y_pred, y):
         self.end = time.time()
         elapsed = self.end - self.start
         self.start = self.end
         self.end = None
+
+        if self.per_sample:
+            elapsed /= len(y_pred)
+        if self.rate:
+            elapsed = 1 / elapsed
 
         return elapsed
 

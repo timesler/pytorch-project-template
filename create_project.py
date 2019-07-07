@@ -51,6 +51,7 @@ def create_project(path, owner, full, git, docker, api, pypi):
     # Without api
     if not docker or not api:
         os.remove(os.path.join(path, 'docker/api.dockerfile'))
+        os.remove(os.path.join(path, 'main.py'))
         dc = os.path.join(path, 'docker-compose.yml')
         subprocess.call(['sed',  '-i', '/api/Q', os.path.join(path, 'docker-compose.yml')])
     # Without docker
