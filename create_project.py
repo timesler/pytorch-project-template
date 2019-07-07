@@ -4,7 +4,7 @@ import subprocess
 import shutil
 import glob
 
-# TODO: Add travis-ci
+# TODO: Add pypi and travis-ci flags
 
 DESCRIPTION = """Create pytorch project template.
 
@@ -18,7 +18,7 @@ dockerfile and docker-compose service for model deployment via a REST API.
 """
 
 
-def create_project(path, owner, full, git, docker, api):
+def create_project(path, owner, full, git, docker, api, pypi):
     # Don't proceed if path already exists
     if os.path.exists(path):
         raise Exception(f'Path ({path}) already exists. Remove the target directory or choose '
@@ -58,6 +58,9 @@ def create_project(path, owner, full, git, docker, api):
         os.remove(os.path.join(path, '.dockerignore'))
         os.remove(os.path.join(path, 'docker-compose.yml'))
         shutil.rmtree(os.path.join(path, 'docker'))
+    # Without pypi
+    if not pypi:
+        os.remove(os.path.join(path, 'setup.py'))
 
 
 if __name__ == "__main__":
@@ -68,6 +71,7 @@ if __name__ == "__main__":
     parser.add_argument('--git', action='store_true', help='Whether to include git.')
     parser.add_argument('--docker', action='store_true', help='Whether to include docker and docker-compose.')
     parser.add_argument('--api', action='store_true', help='Whether to include REST API for serving models.')
+    parser.add_argument('--pypi', action='store_true', help='Whether to include PyPI setup script.')
     args = parser.parse_args()
 
     print(f'Creating new project at {args.path}, owned by {args.owner}')
@@ -79,4 +83,5 @@ if __name__ == "__main__":
         args.git,
         args.docker,
         args.api,
+        args.pypi,
     )

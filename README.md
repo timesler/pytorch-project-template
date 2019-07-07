@@ -42,7 +42,13 @@ Requires git, python, and conda.
     * git: `--git`
     * docker and docker-compose to develop models in a container: `--docker`
     * a dockerfile and docker-compose service to serve models with a REST API: `--api`
-    * all of the above: `-full` 
+    * a setup.py file for building a pip/PyPI package: `--pypi`
+    * all of the above: `-full`
+    
+    E.g., for building a python package, you probably want:
+    ```bash
+    create_project.py <new_project_path> <new_project_owner> --git --pypi
+    ```
 
 1. Create development environment using conda or docker:
     * conda:

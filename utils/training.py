@@ -34,8 +34,7 @@ class BatchTimer(object):
 
 def pass_epoch(
     model, loss_fn, optimizer, loader,
-    scheduler=None, batch_metrics={'time': BatchTimer()}, device='cpu',
-    rolling_mean=False
+    scheduler=None, batch_metrics={'time': BatchTimer()}, device='cpu'
 ):
     """Train or evaluate over a data epoch.
     
@@ -60,7 +59,7 @@ def pass_epoch(
     """
     
     mode = 'Train' if model.training else 'Eval '
-    logger = Logger(mode, rolling_mean)
+    logger = Logger(mode, True)
     loss = 0
     metrics = {}
     for i_batch, (x, y) in enumerate(loader):
