@@ -21,8 +21,11 @@ dockerfile and docker-compose service for model deployment via a REST API.
 def create_project(path, owner, full, git, docker, api, pypi):
     # Don't proceed if path already exists
     if os.path.exists(path):
-        raise Exception(f'Path ({path}) already exists. Remove the target directory or choose '
-            'another location.')
+        proceed = input(f'WARNING: Path ({path}) already exists. Overwrite[Y/n]?')
+        if proceed.lower() != 'y' and proceed != '':
+            return
+        else:
+            shutil.rmtree(path)
     
     # Make project directory and initialize it as a git repo
     os.makedirs(path)
@@ -45,17 +48,18 @@ def create_project(path, owner, full, git, docker, api, pypi):
         return
     # Without git
     if not git:
+        os.remove(os.path.join(path, '.gitignore'))
         git_files = glob.glob(f'{path}/**/.git*')
         for f in git_files:
             os.remove(f)
     # Without api
-    if not docker or not api:
+    if not api:
         os.remove(os.path.join(path, 'docker/api.dockerfile'))
         os.remove(os.path.join(path, 'main.py'))
         dc = os.path.join(path, 'docker-compose.yml')
         subprocess.call(['sed',  '-i', '/api/Q', os.path.join(path, 'docker-compose.yml')])
     # Without docker
-    if not docker:
+    if not docker and not api:
         os.remove(os.path.join(path, '.dockerignore'))
         os.remove(os.path.join(path, 'docker-compose.yml'))
         shutil.rmtree(os.path.join(path, 'docker'))
