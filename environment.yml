@@ -1,4 +1,3 @@
-name: pytorch-py37
 channels: 
   - pytorch
   - conda-forge
@@ -11,12 +10,9 @@ dependencies:
   - matplotlib
   - tensorboardx
   - jupyterlab
-  - plotly
   - pytorch
   - torchvision
   - cudatoolkit=10.0
   - pip:
     - opencv-python
-    - coverage
-    - codecov
     - tqdm

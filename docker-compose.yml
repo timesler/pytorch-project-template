@@ -2,12 +2,22 @@ version: '3'
 
 services:
 
-  analytics:
+  train:
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: docker/train.dockerfile
     ports:
-      - 33380:80
-      - 38888:8888
+      - 8888:8888
     volumes:
       - "./:/code"
+  
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.dockerfile
+    environment:
+      PORT: 8000
+    ports:
+      - 8000:8000
+    volumes:
+      - "./:/app"
