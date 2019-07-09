@@ -53,8 +53,8 @@ class BatchTimer(object):
 
 
 def pass_epoch(
-    model, loss_fn, optimizer, loader,
-    scheduler=None, batch_metrics={'time': BatchTimer()}, device='cpu'
+    model, loss_fn, loader, batch_metrics={'time': BatchTimer()},
+    optimizer=None, scheduler=None, device='cpu'
 ):
     """Train or evaluate over a data epoch.
     
@@ -104,10 +104,3 @@ def pass_epoch(
     metrics = {k: v / (i_batch + 1) for k, v in metrics.items()}
 
     return loss, metrics
-
-
-def print_model_parameters(model):
-    print('\nModel parameters:')
-    print(f'{"Parameter":25s}{"Shape":20s}Requires Grad')
-    for n, p in model.named_parameters():
-        print(f'{n:25s}{str(list(p.data.shape)):20s}{p.requires_grad}')

@@ -34,7 +34,7 @@ def create_project(path, owner, full, git, docker, api, pypi):
     
     # Loop through items in template, skipping .git/ and this file
     for d in os.listdir('.'):
-        if d != '.git' and d != __file__:
+        if d != '.git' and d != __file__ and d != '__pycache__':
             if os.path.isdir(d):
                 shutil.copytree(d, os.path.join(path, d))
             if os.path.isfile(d):
