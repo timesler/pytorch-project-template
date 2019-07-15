@@ -18,10 +18,10 @@ dockerfile and docker-compose service for model deployment via a REST API.
 """
 
 
-def create_project(path, owner, full, git, docker, api, pypi):
+def create_project(path, owner, full, git, docker, api, pypi, tests, ci):
     # Don't proceed if path already exists
     if os.path.exists(path):
-        proceed = input(f'WARNING: Path ({path}) already exists. Overwrite[Y/n]?')
+        proceed = input(f'WARNING: Path "{path}" already exists. Overwrite ([Y]/n)?')
         if proceed.lower() != 'y' and proceed != '':
             return
         else:
@@ -29,7 +29,7 @@ def create_project(path, owner, full, git, docker, api, pypi):
     
     # Make project directory and initialize it as a git repo
     os.makedirs(path)
-    if git:
+    if git or full:
         subprocess.call(['git', 'init'], cwd=path)
     
     # Loop through items in template, skipping .git/ and this file
@@ -39,6 +39,8 @@ def create_project(path, owner, full, git, docker, api, pypi):
                 shutil.copytree(d, os.path.join(path, d))
             if os.path.isfile(d):
                 shutil.copyfile(d, os.path.join(path, d))
+    
+    print(f'Initialized pytorch project in {os.path.abspath(path)}')
     
     # Modify LICENSE file to have the correct owner for the project
     subprocess.call(['sed', '-i', f's/Tim Esler/{owner}/g', os.path.join(path, 'LICENSE')])
@@ -66,6 +68,11 @@ def create_project(path, owner, full, git, docker, api, pypi):
     # Without pypi
     if not pypi:
         os.remove(os.path.join(path, 'setup.py'))
+    # Without tests
+    if not tests and not ci:
+        shutil.rmtree(os.path.join(path, 'tests'))
+    if not ci:
+        os.remove(os.path.join(path, '.travis.yml'))
 
 
 if __name__ == "__main__":
@@ -77,9 +84,19 @@ if __name__ == "__main__":
     parser.add_argument('--docker', action='store_true', help='Whether to include docker and docker-compose.')
     parser.add_argument('--api', action='store_true', help='Whether to include REST API for serving models.')
     parser.add_argument('--pypi', action='store_true', help='Whether to include PyPI setup script.')
+    parser.add_argument('--tests', action='store_true', help='Whether to include tests/ directory.')
+    parser.add_argument('--ci', action='store_true', help='Whether to include a travis-ci YAML for cont. integration.')
     args = parser.parse_args()
 
     print(f'Creating new project at {args.path}, owned by {args.owner}')
+    print('=' * 17)
+    print(f'| Git:    {str(args.git or args.full):>5s} |')
+    print(f'| Docker: {str(args.docker or args.full or args.api):>5s} |')
+    print(f'| API:    {str(args.api or args.full):>5s} |')
+    print(f'| PyPI:   {str(args.pypi or args.full):>5s} |')
+    print(f'| Tests:  {str(args.tests or args.full or args.ci):>5s} |')
+    print(f'| CI:     {str(args.ci or args.full):>5s} |')
+    print('=' * 17)
 
     create_project(
         args.path,
@@ -89,4 +106,6 @@ if __name__ == "__main__":
         args.docker,
         args.api,
         args.pypi,
+        args.tests,
+        args.ci,
     )

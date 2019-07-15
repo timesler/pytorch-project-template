@@ -8,7 +8,7 @@ dependencies:
   - requests
   - pandas
   - matplotlib
-  - tensorboardx
+  - tensorboard
   - jupyterlab
   - python-multipart
   - pytorch
