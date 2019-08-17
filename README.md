@@ -64,3 +64,13 @@ Requires git, python, and conda.
     ```bash
     docker-compose up -d api
     ```
+
+## Use as Github template
+
+Alternatively, this repo can be used as a template for creating new repos on Github. Simply click "Use this template" at the top of the [main repo page](https://github.com/timesler/pytorch-project-template).
+
+Following this, you should:
+
+* Overwrite this README
+* Remove the `create_project.py` utility
+* Remove all unwanted files and folders
